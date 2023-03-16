@@ -1,6 +1,6 @@
 /**********************************************************************
-*          Copyright (c) 2013, Hogeschool voor de Kunsten Utrecht
-*                      Hilversum, the Netherlands
+*          Copyright (c) 2023, Hogeschool voor de Kunsten Utrecht
+*                      Utrecht, the Netherlands
 *                          All rights reserved
 ***********************************************************************
 *  This program is free software: you can redistribute it and/or modify
@@ -37,36 +37,36 @@ class localOSC : public OSC
 {
   int realcallback(const char *path,const char *types,lo_arg **argv,int argc)
   {
-  string msgpath=path;
+  std::string msgpath=path; // convert char* to std::string
 
-    cout << "path: " << msgpath << endl;
     if(!msgpath.compare("/sound")){
-      string paramname=(char *)argv[0];
+      char * user_input = (char *)argv[0];
       int int1 = argv[1]->i;
       int int2 = argv[2]->i;
-      cout << "Message: " <<
-        paramname << " " <<
+      int int3 = argv[2]->i;
+      std::cout << "Message: " <<
+        user_input << " " <<
         int1 << " " <<
-        int2 << " " << endl;
+        int2 << " " <<
+        int3 << " " << std::endl;
     } // if
     if(!msgpath.compare("/tactile")){
       int int1 = argv[0]->i;
       int int2 = argv[1]->i;
-      cout << "Message: " <<
+      std::cout << "Message: " <<
         int1 << " " <<
-        int2 << " " << endl;
+        int2 << " " << std::endl;
     }
-    if(!msgpath.compare("/box/setstatus")){
-      int row = argv[0]->i;
-      int col = argv[1]->i;
-      int status = argv[2]->i;
-      cout << "Message: " << row << " " << col << " " << status << endl;
+    if(!msgpath.compare("/x")){
+      int x = argv[0]->i;
+      std::cout << "Message: " << x << std::endl;
+    }if(!msgpath.compare("/y")){
+      int y = argv[0]->i;
+      std::cout << "Message: " << y << std::endl;
     } // if
-    if(!msgpath.compare("/note-on")){
-      int channel = argv[0]->i;
-      int pitch = argv[1]->i;
-      int velocity = argv[2]->i;
-      cout << "Message: " << channel << " " << pitch << " " << velocity << endl;
+    if(!msgpath.compare("/freq")){
+      float freq = argv[0]->f;
+      std::cout << "Message: " << freq << std::endl;
     } // if
 
     return 0;
@@ -79,16 +79,17 @@ int main()
 {
 int done = 0;
 localOSC osc;
-string serverport="7777";
+std::string serverport="7777";
 
   osc.init(serverport);
   osc.set_callback("/sound","siii");
   osc.set_callback("/tactile","ii");
-  osc.set_callback("/box/setstatus","iii");
-  osc.set_callback("/note-on","iii");
+  osc.set_callback("/x","i");
+  osc.set_callback("/y","i");
+  osc.set_callback("/freq","f");
 
   osc.start();
-  cout << "Listening on port " << serverport << endl;
+  std::cout << "Listening on port " << serverport << std::endl;
 
   while (!done) 
   {

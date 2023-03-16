@@ -1,6 +1,6 @@
 #####################################################################
-#       (c) Copyright 2015, Hogeschool voor de Kunsten Utrecht
-#                       Hilversum, the Netherlands
+#       (c) Copyright 2023, Hogeschool voor de Kunsten Utrecht
+#                       Utrecht, the Netherlands
 #####################################################################
 #
 # Description   : Makefile for osc server and client

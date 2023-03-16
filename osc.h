@@ -1,6 +1,6 @@
 /**********************************************************************
-*          Copyright (c) 2013, Hogeschool voor de Kunsten Utrecht
-*                      Hilversum, the Netherlands
+*          Copyright (c) 2023, Hogeschool voor de Kunsten Utrecht
+*                      Utrecht, the Netherlands
 *                          All rights reserved
 ***********************************************************************
 *  This program is free software: you can redistribute it and/or modify
@@ -36,8 +36,6 @@
 
 #include <lo/lo.h>
 
-using namespace std;
-
 
 /*
  * class OSC creates a server listening to a certain port. For every
@@ -47,7 +45,7 @@ class OSC
 {
 public:
   OSC();
-  void init(string serverport);
+  void init(std::string serverport);
   void set_callback(const char *path,const char *types);
   void start();
 

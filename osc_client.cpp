@@ -1,6 +1,6 @@
 /**********************************************************************
-*          Copyright (c) 2013, Hogeschool voor de Kunsten Utrecht
-*                      Hilversum, the Netherlands
+*          Copyright (c) 2023, Hogeschool voor de Kunsten Utrecht
+*                      Utrecht, the Netherlands
 *                          All rights reserved
 ***********************************************************************
 *  This program is free software: you can redistribute it and/or modify
@@ -33,26 +33,28 @@
 #include <string>
 #include <lo/lo.h>
 
-using namespace std;
 
 int main()
 {
 lo_address target;
-string symbol;
+std::string user_input;
 long fake_timestamp=0;
-int position=10;
+int x=10;
+int y=25;
+float freq=301.5;
 
   target = lo_address_new("localhost","7777");
 
   while(1)
   {
-    cin >> symbol;
-    if(symbol == "quit" || symbol == "q") break;
+    std::cin >> user_input;
+    if(user_input == "quit" || user_input == "q") break;
 
-    //lo_send(target,"/sound","siii","pitch",fake_timestamp,1,42);
-    //lo_send(target,"/tactile","ii",fake_timestamp,42);
-    lo_send(target,"/x","i",position++);
-    lo_send(target,"/y","i",position++);
+    lo_send(target,"/sound","siii",user_input.c_str(),fake_timestamp,1,42);
+    lo_send(target,"/tactile","ii",fake_timestamp,42);
+    lo_send(target,"/x","i",x);
+    lo_send(target,"/y","i",y);
+    lo_send(target,"/freq","f",freq);
 
     fake_timestamp++;
   }

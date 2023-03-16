@@ -1,6 +1,6 @@
 /**********************************************************************
-*          Copyright (c) 2013, Hogeschool voor de Kunsten Utrecht
-*                      Hilversum, the Netherlands
+*          Copyright (c) 2023, Hogeschool voor de Kunsten Utrecht
+*                      Utrecht, the Netherlands
 *                          All rights reserved
 ***********************************************************************
 *  This program is free software: you can redistribute it and/or modify
@@ -52,9 +52,7 @@ int OSC::_wrap_callback(const char *path,const char *types,
 
 static void errorhandler(int num, const char* msg, const char* where)
 {
-   cout << "Error " << num <<
-    msg << " " <<
-    where << endl;
+   std::cout << "Error " << num << msg << " " << where << std::endl;
 
   exit(1);
 }
@@ -63,7 +61,7 @@ static void errorhandler(int num, const char* msg, const char* where)
 /*
  * start a new server in its own thread, waiting for data on the specified port
  */
-void OSC::init(string serverport)
+void OSC::init(std::string serverport)
 {
   server = lo_server_thread_new(serverport.c_str(),errorhandler);
 }
@@ -85,7 +83,7 @@ void OSC::start()
 {
   if(lo_server_thread_start(server) < 0)
   {
-    cout << "Server failed to start" << endl;
+    std::cout << "Server failed to start" << std::endl;
     exit(1);
   }
 }
@@ -96,7 +94,7 @@ void OSC::start()
  */
 int OSC::realcallback(const char *path,const char *types,lo_arg **argv,int argc)
 {
- cout << "blah\n";
+ std::cout << "realcallback() is never to be called\n";
   return 0;
 } // realcallback()
 

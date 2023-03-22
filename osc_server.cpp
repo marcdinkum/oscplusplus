@@ -77,24 +77,28 @@ class localOSC : public OSC
 
 int main()
 {
-int done = 0;
 localOSC osc;
 std::string serverport="7777";
 
   osc.init(serverport);
+
   osc.set_callback("/sound","siii");
   osc.set_callback("/tactile","ii");
   osc.set_callback("/x","i");
   osc.set_callback("/y","i");
   osc.set_callback("/freq","f");
+  osc.set_callback("/quit","");
 
   osc.start();
+
   std::cout << "Listening on port " << serverport << std::endl;
 
-  while (!done) 
+  while(true)
   {
     usleep(1000);
   }
+
+  osc.stop();
 
   return 0;
 }

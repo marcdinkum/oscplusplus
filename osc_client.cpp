@@ -48,7 +48,10 @@ float freq=301.5;
   while(1)
   {
     std::cin >> user_input;
-    if(user_input == "quit" || user_input == "q") break;
+    if(user_input == "quit" || user_input == "q") {
+      lo_send(target,"/quit","");
+      break;
+    }
 
     lo_send(target,"/sound","siii",user_input.c_str(),fake_timestamp,1,42);
     lo_send(target,"/tactile","ii",fake_timestamp,42);

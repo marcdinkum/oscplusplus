@@ -45,16 +45,18 @@ class OSC
 {
 public:
   OSC();
+  ~OSC();
   void init(std::string serverport);
   void set_callback(const char *path,const char *types);
   void start();
+  void stop();
 
   // realcallback is meant to be overridden in a subclass
-  virtual int realcallback(const char *path,const char *types,lo_arg **argv,int argc);
+  virtual int realcallback(const char *path,const char *types,lo_arg **argv,int argc) = 0;
 private:
   static int _wrap_callback(const char *path,const char *types,
           lo_arg **argv,int argc,void *data,void *user_data);
 
-  lo_server_thread server;
+  lo_server_thread server=NULL;
 };
 

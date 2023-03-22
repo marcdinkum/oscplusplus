@@ -37,6 +37,13 @@ OSC::OSC()
 }
 
 
+OSC::~OSC()
+{
+  if(server) lo_server_thread_free(server);
+  server=NULL;
+}
+
+
 /* _wrap_callback() is called by the OSC library and in turn calls the
  *    real callback of the object pointed to by user_data (!)
  *
@@ -52,8 +59,7 @@ int OSC::_wrap_callback(const char *path,const char *types,
 
 static void errorhandler(int num, const char* msg, const char* where)
 {
-   std::cout << "Error " << num << msg << " " << where << std::endl;
-
+  std::cout << "Error " << num << ": " << msg << std::endl;
   exit(1);
 }
 
@@ -74,7 +80,7 @@ void OSC::init(std::string serverport)
  */
 void OSC::set_callback(const char *path,const char *types)
 {
-  lo_server_thread_add_method(server,path,types,_wrap_callback,this);
+  if(server) lo_server_thread_add_method(server,path,types,_wrap_callback,this);
 }
 
 
@@ -89,13 +95,12 @@ void OSC::start()
 }
 
 
-/* 
- * realcallback is an empty function meant to be overridden in a subclass
- */
-int OSC::realcallback(const char *path,const char *types,lo_arg **argv,int argc)
+
+void OSC::stop()
 {
- std::cout << "realcallback() is never to be called\n";
-  return 0;
-} // realcallback()
+  if(server) lo_server_thread_free(server);
+  server=NULL;
+}
+
 
 

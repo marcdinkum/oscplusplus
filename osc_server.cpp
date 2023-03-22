@@ -79,6 +79,7 @@ int main()
 {
 localOSC osc;
 std::string serverport="7777";
+std::string user_input;
 
   osc.init(serverport);
 
@@ -92,10 +93,12 @@ std::string serverport="7777";
   osc.start();
 
   std::cout << "Listening on port " << serverport << std::endl;
+  std::cout << "Type quit to stop" << std::endl;
 
   while(true)
   {
-    usleep(1000);
+    std::cin >> user_input;
+    if(user_input == "quit") break;
   }
 
   osc.stop();
